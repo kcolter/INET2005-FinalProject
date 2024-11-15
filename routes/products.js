@@ -1,7 +1,13 @@
 import express from 'express';
+import { PrismaClient } from '@prisma/client';
 
 //express setup
 const router = express.Router();
+
+//prisma
+const prisma = new PrismaClient({ //prisma setup
+    log: ['query', 'info', 'warn', 'error'], //to enable logging
+});
 
 //////////
 //ROUTES//
@@ -9,7 +15,10 @@ const router = express.Router();
 
 //../products/all
 router.get('/all', async (req, res) =>{
-    res.status(200).json("products all route working");
+
+    //NOTE: not properly built out, just using to verify data seeded into db
+    const allProducts = await prisma.product.findMany();
+    res.status(200).json(allProducts);
 });
 
 //../products/:id
