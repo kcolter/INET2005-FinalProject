@@ -70,9 +70,8 @@ router.post('/login', async (req, res) =>{
     if(!passwordMatch){
         return res.status(401).send('Invalid password');
     }
-    console.log(existingUser.password);
-    console.log(password);
-    //setup session
+    
+    //TODO: config session
 
     //send response
     res.json({'email' : email});
