@@ -19,12 +19,10 @@ router.post('/signup', async (req, res) =>{
 
     //get inputs
     const {email, password, firstName, lastName} = req.body;
-
     //validation, for now just checking that all are present
     if(!email || !password || !firstName || !lastName){
         return res.status(400).send("Missing required fields [email, password, first name, last name]");
     }
-
     //check if user already exists
     const existingUser = await prisma.Customer.findUnique({
         where: {
@@ -34,10 +32,8 @@ router.post('/signup', async (req, res) =>{
     if (existingUser){
         return res.status(400).send('A user with that email already exists.');
     }
-
     //hash password
     const hashedPassword = await hashPassword(password);
-
     //add to db
     const user = await prisma.Customer.create({
         data: {
@@ -47,14 +43,39 @@ router.post('/signup', async (req, res) =>{
             password: hashedPassword
         },
     });
-
     //response
     res.json({'user' : email});
 });
 
 //../users/login
 router.post('/login', async (req, res) =>{
-    res.status(200).json("users login route working");
+
+    //get inputs
+    const {email, password} = req.body;
+    //validate input
+    if(!email || !password){
+        res.status(404).send('Missing required fields');
+    }
+    //find user in db
+    const existingUser = await prisma.Customer.findUnique({
+        where: {
+            email: email,
+        }
+    });
+    if(!existingUser){
+        return res.status(404).send('No account found with that email.');
+    }
+    //verify pw
+    const passwordMatch = await comparePassword(password, existingUser.password);
+    if(!passwordMatch){
+        return res.status(401).send('Invalid password');
+    }
+    console.log(existingUser.password);
+    console.log(password);
+    //setup session
+
+    //send response
+    res.json({'email' : email});
 });
 
 //../users/logout
