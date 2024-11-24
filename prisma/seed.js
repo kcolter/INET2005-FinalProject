@@ -1,5 +1,6 @@
 //researched from https://www.prisma.io/docs/orm/prisma-migrate/workflows/seeding
 //and tweaked to be more in-line with https://www.youtube.com/watch?v=2LwTUIqjbPo
+//to seed DB, run command 'npx prisma db seed'
 
 import { PrismaClient } from '@prisma/client';
 const prisma = new PrismaClient();
