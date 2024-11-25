@@ -54,7 +54,7 @@ router.post('/login', async (req, res) =>{
     const {email, password} = req.body;
     //validate input
     if(!email || !password){
-        res.status(404).send('Missing required fields');
+        res.status(400).send('Missing required fields');
     }
     //find user in db
     const existingUser = await prisma.Customer.findUnique({
