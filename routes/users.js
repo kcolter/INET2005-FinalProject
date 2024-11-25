@@ -1,6 +1,7 @@
 import express from 'express';
 import { PrismaClient } from '@prisma/client';
 import { hashPassword, comparePassword } from '../lib/utility.js';
+import PasswordValidator from 'password-validator';
 
 //////////////
 //MIDDLEWARE//
@@ -9,6 +10,14 @@ const router = express.Router();//express setup
 const prisma = new PrismaClient({ //prisma setup
     log: ['query', 'info', 'warn', 'error'], //to enable logging
 });
+
+//password validation. 
+var pwSchema = new PasswordValidator();
+pwSchema
+.is().min(8) //min length of 8
+.has().digits(1) //at least 1 number
+.has().lowercase()//at least 1 lowercase
+.has().uppercase();//at least 1 uppercase
 
 //////////
 //ROUTES//
@@ -32,6 +41,12 @@ router.post('/signup', async (req, res) =>{
     if (existingUser){
         return res.status(400).send('A user with that email already exists.');
     }
+
+    //make sure password satisfys req strength
+    if(!pwSchema.validate(password)){
+        return res.status(403).send('Password too weak. Minimum 8 characters, 1 number, at least 1 uppercase and 1 lowercase character')
+    }
+
     //hash password
     const hashedPassword = await hashPassword(password);
     //add to db
