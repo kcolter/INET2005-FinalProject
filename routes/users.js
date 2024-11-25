@@ -71,7 +71,11 @@ router.post('/login', async (req, res) =>{
         return res.status(401).send('Invalid password');
     }
     
-    //TODO: config session
+    //config session
+    req.session.userId = existingUser.id;
+    req.session.email = existingUser.email;
+    req.session.firstName = existingUser.first_name;
+    req.session.lastName = existingUser.last_name;
 
     //send response
     res.json({'email' : email});
@@ -79,12 +83,18 @@ router.post('/login', async (req, res) =>{
 
 //../users/logout
 router.post('/logout', async (req, res) =>{
-    res.status(200).json("users logout route working");
+    req.session.destroy();
+    res.send('session logged out');
 });
 
 //../users/getSession
 router.get('/getSession', async (req, res) =>{
-    res.status(200).json("users getSession route working");
+    res.status(200).json({
+        'user id' : req.session.userId,
+        'email' : req.session.email,
+        'first name': req.session.firstName,
+        'last name': req.session.lastName
+    });
 });
 
 
