@@ -94,8 +94,6 @@ router.get('/getSession', async (req, res) =>{
         return res.status(401).send('not logged in');
     }
 
-    console.log(req.session.customer_id);
-
     res.status(200).json({
         'user id' : req.session.customer_id,
         'email' : req.session.email,
