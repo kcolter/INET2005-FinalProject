@@ -1,13 +1,33 @@
 import express from 'express';
 import productsRouter from './routes/products.js';
 import usersRouter from './routes/users.js';
+import cors from 'cors';
 
 const port = process.env.PORT || 3000;
 const app = express();
 
+//middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static('public'));
+
+//cors middleware
+app.use(cors({
+  credentials: true
+}));
+
+//session middleware
+app.use(session({
+  secret: 'qwerty13579',
+  resave: false,
+  saveUninitialized: true,
+  cookie: {
+    httpOnly: true,
+    secure: false,
+    sameSite: 'lax',
+    maxAge: 3600000 //1 hour in ms
+  }
+}));
 
 //Routes
 app.use('/api/products', productsRouter);
