@@ -72,10 +72,10 @@ router.post('/login', async (req, res) =>{
     }
     
     //config session
-    req.session.userId = existingUser.id;
+    req.session.customer_id = existingUser.id;
     req.session.email = existingUser.email;
-    req.session.firstName = existingUser.first_name;
-    req.session.lastName = existingUser.last_name;
+    req.session.first_name = existingUser.first_name;
+    req.session.last_name = existingUser.last_name;
 
     //send response
     res.json({'email' : email});
@@ -89,11 +89,16 @@ router.post('/logout', async (req, res) =>{
 
 //../users/getSession
 router.get('/getSession', async (req, res) =>{
+
+    if(!req.session.userId){
+        return res.status(401).send('not logged in');
+    }
+
     res.status(200).json({
-        'user id' : req.session.userId,
+        'user id' : req.session.customer_id,
         'email' : req.session.email,
-        'first name': req.session.firstName,
-        'last name': req.session.lastName
+        'first name': req.session.first_name,
+        'last name': req.session.last_name
     });
 });
 
