@@ -125,7 +125,7 @@ router.post('/purchase', async (req, res) =>{
         }
     }
 
-    res.status(200).json("products purchase route working");
+    res.status(200).json({'PurchaseId': thisPurchase.purchase_id});
 });
 
 
