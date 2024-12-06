@@ -1,12 +1,13 @@
 import { useEffect, useState } from "react";
 
 export default function Home(){
-    const [products, setProducts] = useState(null);
+    const [products, setProducts] = useState([]);
 
     useEffect(() =>{
         async function getAllProducts(){
             const url = import.meta.env.VITE_APP_HOST + "/products/all";
 
+            //fetch data from api
             const response = await fetch(url, {method:"GET"});
 
             if(response.ok){
@@ -39,7 +40,7 @@ export default function Home(){
 
 
             {products.map((item) => {
-                return <tr><td>{item.name}</td><td>{item.description}</td><td>${item.cost}</td><td><img src="./"></img></td></tr> ;
+                return <tr><td>{item.name}</td><td>{item.description}</td><td>${item.cost}</td><td></td></tr> ;
             })}
 
         </table> 
