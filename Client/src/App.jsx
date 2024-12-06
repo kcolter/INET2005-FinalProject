@@ -1,9 +1,13 @@
+import { Outlet } from 'react-router-dom';
 
 function App() {
 
   return (
     <>
-      <p>Outlet test</p>
+      <h1>App.js parent page</h1>
+      <div>
+        <Outlet />
+      </div>
     </>
   )
 }
