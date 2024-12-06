@@ -1,10 +1,15 @@
 import { Outlet } from 'react-router-dom';
-
+import Nav from './ui/Nav';
 function App() {
 
   return (
     <>
       <h1>App.js parent page</h1>
+
+      <div>
+        <Nav />
+      </div>
+      
       <div>
         <Outlet />
       </div>
