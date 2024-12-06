@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { Link } from 'react-router-dom';
 
 export default function Home(){
     const [products, setProducts] = useState([]);
@@ -36,11 +37,18 @@ export default function Home(){
                     <th>Description</th>
                     <th>Price</th>
                     <th>Image</th>
+                    <th>See Details</th>
                 </tr>
 
 
             {products.map((item) => {
-                return <tr><td>{item.name}</td><td>{item.description}</td><td>${item.cost}</td><td></td></tr> ;
+                var thisPic = "./src/assets/images/" + item.image_filename;
+                console.log(thisPic);
+                return <tr><td>{item.name}</td><td>{item.description}</td>
+                <td>${item.cost}</td>
+                <td><img src={thisPic} className="img-fluid"></img></td>
+                <td><Link to="/details">Details for {item.name}</Link></td>
+                </tr>;
             })}
 
         </table> 
