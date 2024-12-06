@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router-dom';
 import Nav from './ui/Nav';
+import 'bootstrap/dist/css/bootstrap.min.css';
 function App() {
 
   return (

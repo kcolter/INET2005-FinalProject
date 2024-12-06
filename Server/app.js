@@ -14,7 +14,8 @@ app.use(express.static('public'));
 
 //cors middleware
 app.use(cors({
-  credentials: true
+  origin: 'http://localhost:5173',
+  credentials: true,
 }));
 
 //session middleware

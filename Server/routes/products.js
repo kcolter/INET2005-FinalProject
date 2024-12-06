@@ -21,6 +21,7 @@ router.get('/all', async (req, res) =>{
     if (!allProducts){
         res.status(404).json("Could not retrieve any data");
     }
+    res.set('Access-Control-Allow-Origin', '*'); //setting the CORS access-control policy
     res.status(200).json(allProducts);
 });
 
