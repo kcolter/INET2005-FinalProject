@@ -1,7 +1,9 @@
 import { useParams, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useCookies } from 'react-cookie';
 export default function Details(){
 
+    const [cookies, setCookie] = useCookies(['BrickAndMortarCart']);
     const [productInfo, setProductInfo] = useState([]);
     const { id } = useParams();
 
@@ -21,8 +23,20 @@ export default function Details(){
         getProductInfo();
     }, []);
 
-    var imgURL = "/src/assets/images/" + productInfo.image_filename;
+    async function AddProductToCart() {
+        
+        var currentCookieVal = "" + cookies.BrickAndMortarCart; //get existing cookie
+        console.log(currentCookieVal);
 
+        if(currentCookieVal != "undefined"){
+        currentCookieVal += "," + productInfo.product_id; //append this products id
+        setCookie('BrickAndMortarCart', currentCookieVal, {path:'/', maxAge: 3600}) //re-set the cookie, timer is 1hr  
+        } else {
+            setCookie('BrickAndMortarCart', "" + productInfo.product_id, {path:'/', maxAge: 3600}); //if cookie is null, set it for the first time
+        }
+    }
+
+    var imgURL = "/src/assets/images/" + productInfo.image_filename;
     return (
         <div>
             <h1>Product details for {productInfo.name}</h1>
@@ -31,7 +45,7 @@ export default function Details(){
             <img src={imgURL}></img>
             <br></br>
             <Link to="/">Go back</Link>
-            <button>Add to cart</button>
+            <button onClick={AddProductToCart}>Add to cart</button>
         </div>
     );
 }
