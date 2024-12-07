@@ -26,9 +26,8 @@ export default function Details() {
     async function AddProductToCart() {
 
         var currentCookieVal = "" + cookies.BrickAndMortarCart; //get existing cookie
-        console.log(currentCookieVal);
 
-        //if-logic to avoid having 'undefined' as first cart entry
+        //logic to avoid having 'undefined' as first cart entry
         if (currentCookieVal != "undefined") {
             currentCookieVal += "," + productInfo.product_id; //append this products id
             setCookie('BrickAndMortarCart', currentCookieVal, { path: '/', maxAge: 3600 }) //re-set the cookie, timer is 1hr  

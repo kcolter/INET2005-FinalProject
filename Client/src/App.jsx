@@ -5,7 +5,7 @@ function App() {
 
   return (
     <>
-      <h1>App.js parent page</h1>
+      <h1>The eCommerce Brick-and-Mortar store</h1>
 
       <div>
         <Nav />
